@@ -20,7 +20,7 @@ Sebelum menjalankan aplikasi, pastikan komputer Anda telah terinstal modul berik
 * **XAMPP** (Minimal PHP Versi 7.4 atau versi di atasnya)
 * **Web Browser** (Google Chrome, Microsoft Edge, atau sejenisnya)
 * **Git** (Untuk kebutuhan manajemen repositori)
-
+link youtube:( https://youtu.be/ZKRTiYTVXNc?si=CyKGRYexZ_QfPudf )
 2. Penempatan Folder Proyek
 1. Unduh atau klon repositori ini.
 2. Pastikan nama folder proyek diubah sesuai format tugas: `aplikasi-blog-[nim]`.
