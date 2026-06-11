@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+
+date_default_timezone_set('Asia/Jakarta');
+$waktu_login = date('H:i:s') . ' WIB';
+$tanggal_login = date('d F Y');
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -112,7 +124,7 @@
   .badge {
     display: inline-block; padding: 3px 10px; border-radius: 20px;
     font-size: 12px; font-weight: 600;
-    background: #366096; color: #567254;
+    background: #c0d7f6; color: #567254;
   }
 
   /* BUTTONS */
@@ -216,16 +228,30 @@
 
   /* PASSWORD DISPLAY */
   .pw-masked { font-family: monospace; letter-spacing: 2px; color: var(--muted); }
+  
 </style>
+
 </head>
 <body>
 
 <!-- HEADER -->
 <header>
   <span class="logo-icon">📰</span>
+
   <div>
     <h1>SISTEM MANAJEMEN BLOG (CMS)</h1>
     <p>Blog Keren</p>
+  </div>
+
+  <div style="margin-left:auto; display:flex; align-items:center; gap:15px;">
+    <div style="text-align:right;">
+      
+      <small>@<?= $_SESSION['user_name']; ?></small>
+    </div>
+
+    <a href="beranda.php" class="btn btn-danger">
+      Logout
+    </a>
   </div>
 </header>
 
@@ -235,6 +261,9 @@
   <aside>
     <div class="menu-label">Menu Utama</div>
     <nav>
+      <a href="#" id="nav-dashboard" onclick="bukaMenu('dashboard'); return false;">
+  <span class="icon">📊</span> Dashboard
+</a>
       <a href="#" class="active" id="nav-penulis" onclick="bukaMenu('penulis'); return false;">
         <span class="icon">👤</span> Kelola Penulis
       </a>
@@ -249,7 +278,41 @@
 
   <!-- MAIN -->
   <main>
+<!-- ===== DASHBOARD ===== -->
+<div class="section active" id="section-dashboard">
 
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header">
+      <h2>Dashboard Utama</h2>
+    </div>
+
+    <div style="padding:20px;">
+      <h2 style="margin-bottom:10px;">
+        Selamat Datang,
+        <span style="color:#16a34a;">
+          <?= $_SESSION['nama']; ?>
+        </span>
+      </h2>
+
+      <p style="margin-bottom:15px;">
+        Kamu berhasil masuk ke SISTEM MANAJEMEN BLOG (CMS).
+      </p>
+
+      <div style="display:flex; gap:20px; flex-wrap:wrap;">
+        <span>📅 <?= $tanggal_login; ?></span>
+        <span>⏰ <?= $waktu_login; ?></span>
+        <span style="color:green;">🟢 Status Sesi Aktif</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- KARTU STATISTIK -->
+  <div style="display:grid;
+              grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+              gap:15px;">
+      </div>
+
+</div>
     <!-- ===== PENULIS ===== -->
     <div class="section active" id="section-penulis">
       <div class="card">
@@ -500,6 +563,7 @@
     </form>
   </div>
 </div>
+
 
 <!-- ======================== MODAL TAMBAH KATEGORI ======================== -->
 <div class="modal-overlay" id="modal-tambah-kategori">
@@ -762,6 +826,7 @@ async function bukaModalTambahArtikel() {
   bukaModal('modal-tambah-artikel');
 }
 
+
 async function simpanArtikel(e) {
   e.preventDefault();
   const fd = new FormData(e.target);
@@ -816,10 +881,9 @@ async function eksekusiHapus(tipe, id) {
   if (json.status === 'sukses') {
     if (tipe === 'penulis')  muatPenulis();
     if (tipe === 'artikel')  muatArtikel();
-    if (tipe === 'kategori') muatKategori();
+    if (tipe === 'kategori') muatKategori(); 
   }
 }
-
 // ======= INIT =======
 muatPenulis();
 </script>
